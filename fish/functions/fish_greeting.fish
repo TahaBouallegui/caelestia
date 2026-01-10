@@ -1,10 +1,6 @@
 function fish_greeting
-    echo -ne '\x1b[38;5;16m'  # Set colour to primary
-    echo '     ______           __          __  _       '
-    echo '    / ____/___ ____  / /__  _____/ /_(_)___ _ '
-    echo '   / /   / __ `/ _ \/ / _ \/ ___/ __/ / __ `/ '
-    echo '  / /___/ /_/ /  __/ /  __(__  ) /_/ / /_/ /  '
-    echo '  \____/\__,_/\___/_/\___/____/\__/_/\__,_/   '
+    echo -ne '\x1b[38;5;16m' # Set colour to primary
+
     set_color normal
-    fastfetch --key-padding-left 5
+    fastfetch --raw ~/Pictures/out.sixel --logo-width 20 --logo-height 20 --logo-padding-right 22 --logo-padding-top 2
 end

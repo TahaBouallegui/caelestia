@@ -1,0 +1,652 @@
+diff --git a/btop/btop.conf b/btop/btop.conf
+index af4b0ee..9ad679b 100644
+--- a/btop/btop.conf
++++ b/btop/btop.conf
+@@ -1,18 +1,18 @@
+-#? Config file for btop v. 1.4.5
++#? Config file for btop v.1.4.6
+ 
+ #* Name of a btop++/bpytop/bashtop formatted ".theme" file, "Default" and "TTY" for builtin themes.
+ #* Themes should be placed in "../share/btop/themes" relative to binary or "$HOME/.config/btop/themes"
+ color_theme = "caelestia"
+ 
+ #* If the theme set background should be shown, set to False if you want terminal background transparency.
+-theme_background = False
++theme_background = false
+ 
+ #* Sets if 24-bit truecolor should be used, will convert 24-bit colors to 256 color (6x6x6 color cube) if false.
+-truecolor = True
++truecolor = true
+ 
+ #* Set to true to force tty mode regardless if a real tty has been detected or not.
+ #* Will force 16-color mode and TTY theme, set all graph symbols to "tty" and swap out other non tty friendly symbols.
+-force_tty = False
++force_tty = false
+ 
+ #* Define presets for the layout of the boxes. Preset 0 is always all boxes shown with default settings. Max 9 presets.
+ #* Format: "box_name:P:G,box_name:P:G" P=(0 or 1) for alternate positions, G=graph symbol to use for box.
+@@ -22,10 +22,13 @@ presets = "cpu:1:default,proc:0:default cpu:0:default,mem:0:default,net:0:defaul
+ 
+ #* Set to True to enable "h,j,k,l,g,G" keys for directional control in lists.
+ #* Conflicting keys for h:"help" and k:"kill" is accessible while holding shift.
+-vim_keys = False
++vim_keys = false
+ 
+ #* Rounded corners on boxes, is ignored if TTY mode is ON.
+-rounded_corners = True
++rounded_corners = true
++
++#* Use terminal synchronized output sequences to reduce flickering on supported terminals.
++terminal_sync = true
+ 
+ #* Default symbols to use for graph creation, "braille", "block" or "tty".
+ #* "braille" offers the highest resolution but might not be included in all fonts.
+@@ -60,37 +63,40 @@ update_ms = 2000
+ proc_sorting = "cpu lazy"
+ 
+ #* Reverse sorting order, True or False.
+-proc_reversed = False
++proc_reversed = false
+ 
+ #* Show processes as a tree.
+-proc_tree = False
++proc_tree = false
+ 
+ #* Use the cpu graph colors in the process list.
+-proc_colors = True
++proc_colors = true
+ 
+ #* Use a darkening gradient in the process list.
+-proc_gradient = True
++proc_gradient = true
+ 
+ #* If process cpu usage should be of the core it's running on or usage of the total available cpu power.
+-proc_per_core = False
++proc_per_core = false
+ 
+ #* Show process memory as bytes instead of percent.
+-proc_mem_bytes = True
++proc_mem_bytes = true
+ 
+ #* Show cpu graph for each process.
+-proc_cpu_graphs = True
++proc_cpu_graphs = true
+ 
+ #* Use /proc/[pid]/smaps for memory information in the process info box (very slow but more accurate)
+-proc_info_smaps = False
++proc_info_smaps = false
+ 
+ #* Show proc box on left side of screen instead of right.
+-proc_left = False
++proc_left = false
+ 
+ #* (Linux) Filter processes tied to the Linux kernel(similar behavior to htop).
+-proc_filter_kernel = False
++proc_filter_kernel = false
+ 
+ #* In tree-view, always accumulate child process resources in the parent process.
+-proc_aggregate = False
++proc_aggregate = false
++
++#* Should cpu and memory usage display be preserved for dead processes when paused.
++keep_dead_proc_usage = false
+ 
+ #* Sets the CPU stat shown in upper half of the CPU graph, "total" is always available.
+ #* Select from a list of detected attributes from the options menu.
+@@ -104,28 +110,28 @@ cpu_graph_lower = "Auto"
+ show_gpu_info = "Auto"
+ 
+ #* Toggles if the lower CPU graph should be inverted.
+-cpu_invert_lower = True
++cpu_invert_lower = true
+ 
+ #* Set to True to completely disable the lower CPU graph.
+-cpu_single_graph = False
++cpu_single_graph = false
+ 
+ #* Show cpu box at bottom of screen instead of top.
+-cpu_bottom = False
++cpu_bottom = false
+ 
+ #* Shows the system uptime in the CPU box.
+-show_uptime = True
++show_uptime = true
+ 
+ #* Shows the CPU package current power consumption in watts. Requires running `make setcap` or `make setuid` or running with sudo.
+-show_cpu_watts = True
++show_cpu_watts = true
+ 
+ #* Show cpu temperature.
+-check_temp = True
++check_temp = true
+ 
+ #* Which sensor to use for cpu temperature, use options menu to select from list of available sensors.
+ cpu_sensor = "Auto"
+ 
+ #* Show temperatures for cpu cores also if check_temp is True and sensors has been found.
+-show_coretemp = True
++show_coretemp = true
+ 
+ #* Set a custom mapping between core and coretemp, can be needed on certain cpus to get correct temperature for correct core.
+ #* Use lm-sensors or similar to see which cores are reporting temperatures on your machine.
+@@ -137,17 +143,20 @@ cpu_core_map = ""
+ temp_scale = "celsius"
+ 
+ #* Use base 10 for bits/bytes sizes, KB = 1000 instead of KiB = 1024.
+-base_10_sizes = False
++base_10_sizes = false
+ 
+ #* Show CPU frequency.
+-show_cpu_freq = True
++show_cpu_freq = true
++
++#* How to calculate CPU frequency, available values: "first", "range", "lowest", "highest" and "average".
++freq_mode = "first"
+ 
+ #* Draw a clock at top of screen, formatting according to strftime, empty string to disable.
+ #* Special formatting: /host = hostname | /user = username | /uptime = system uptime
+ clock_format = "%X"
+ 
+ #* Update main ui in background when menus are showing, set this to false if the menus is flickering too much for comfort.
+-background_update = True
++background_update = true
+ 
+ #* Custom cpu model name, empty string to disable.
+ custom_cpu_name = ""
+@@ -157,43 +166,43 @@ custom_cpu_name = ""
+ disks_filter = ""
+ 
+ #* Show graphs instead of meters for memory values.
+-mem_graphs = True
++mem_graphs = true
+ 
+ #* Show mem box below net box instead of above.
+-mem_below_net = False
++mem_below_net = false
+ 
+ #* Count ZFS ARC in cached and available memory.
+-zfs_arc_cached = True
++zfs_arc_cached = true
+ 
+ #* If swap memory should be shown in memory box.
+-show_swap = True
++show_swap = true
+ 
+ #* Show swap as a disk, ignores show_swap value above, inserts itself after first disk.
+-swap_disk = True
++swap_disk = true
+ 
+ #* If mem box should be split to also show disks info.
+-show_disks = True
++show_disks = true
+ 
+ #* Filter out non physical disks. Set this to False to include network disks, RAM disks and similar.
+-only_physical = True
++only_physical = true
+ 
+ #* Read disks list from /etc/fstab. This also disables only_physical.
+-use_fstab = True
++use_fstab = true
+ 
+ #* Setting this to True will hide all datasets, and only show ZFS pools. (IO stats will be calculated per-pool)
+-zfs_hide_datasets = False
++zfs_hide_datasets = false
+ 
+ #* Set to true to show available disk space for privileged users.
+-disk_free_priv = False
++disk_free_priv = false
+ 
+ #* Toggles if io activity % (disk busy time) should be shown in regular disk usage view.
+-show_io_stat = True
++show_io_stat = true
+ 
+ #* Toggles io mode for disks, showing big graphs for disk read/write speeds.
+-io_mode = False
++io_mode = false
+ 
+ #* Set to True to show combined read/write io graphs in io mode.
+-io_graph_combined = False
++io_graph_combined = false
+ 
+ #* Set the top speed for the io graphs in MiB/s (100 by default), use format "mountpoint:speed" separate disks with whitespace " ".
+ #* Example: "/mnt/media:100 /:20 /boot:1".
+@@ -205,10 +214,10 @@ net_download = 100
+ net_upload = 100
+ 
+ #* Use network graphs auto rescaling mode, ignores any values set above and rescales down to 10 Kibibytes at the lowest.
+-net_auto = True
++net_auto = true
+ 
+ #* Sync the auto scaling for download and upload to whichever currently has the highest scale.
+-net_sync = True
++net_sync = true
+ 
+ #* Starts with the Network Interface specified here.
+ net_iface = ""
+@@ -217,26 +226,32 @@ net_iface = ""
+ base_10_bitrate = "Auto"
+ 
+ #* Show battery stats in top right if battery is present.
+-show_battery = True
++show_battery = true
+ 
+ #* Which battery to use if multiple are present. "Auto" for auto detection.
+ selected_battery = "Auto"
+ 
+ #* Show power stats of battery next to charge indicator.
+-show_battery_watts = True
++show_battery_watts = true
+ 
+-#* Set loglevel for "~/.config/btop/btop.log" levels are: "ERROR" "WARNING" "INFO" "DEBUG".
++#* Set loglevel for "~/.local/state/btop.log" levels are: "ERROR" "WARNING" "INFO" "DEBUG".
+ #* The level set includes all lower levels, i.e. "DEBUG" will show all logging info.
+ log_level = "WARNING"
+ 
++#* Automatically save current settings to config file on exit.
++save_config_on_exit = true
++
+ #* Measure PCIe throughput on NVIDIA cards, may impact performance on certain cards.
+-nvml_measure_pcie_speeds = True
++nvml_measure_pcie_speeds = true
+ 
+ #* Measure PCIe throughput on AMD cards, may impact performance on certain cards.
+-rsmi_measure_pcie_speeds = True
++rsmi_measure_pcie_speeds = true
+ 
+ #* Horizontally mirror the GPU graph.
+-gpu_mirror_graph = True
++gpu_mirror_graph = true
++
++#* Set which GPU vendors to show. Available values are "nvidia amd intel"
++shown_gpus = "nvidia amd intel"
+ 
+ #* Custom gpu0 model name, empty string to disable.
+ custom_gpu_name0 = ""
+diff --git a/fastfetch/config.jsonc b/fastfetch/config.jsonc
+index 53b5ca8..1a5b2a9 100644
+--- a/fastfetch/config.jsonc
++++ b/fastfetch/config.jsonc
+@@ -1,6 +1,5 @@
+ {
+     "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+-    "logo": null,
+     "display": {
+         "separator": "  ",
+         "color": "white",
+@@ -8,9 +7,29 @@
+     },
+     "modules": [
+         "break",
++	{
++            "type": "custom",
++            "key": " "
++        },
++	{
++            "type": "custom",
++            "key": " "
++        },
++	{
++            "type": "custom",
++            "key": " "
++        },
++	{
++            "type": "custom",
++            "key": " "
++        },
++	{
++            "type": "custom",
++            "key": " "
++        },
+         {
+             "type": "custom",
+-            "key": "╭───────────────────────────────────╮"
++            "key": "{$1}╭───────────────────────────────────╮"
+         },
+         {
+             "type": "kernel",
+@@ -19,7 +38,7 @@
+         },
+         {
+             "type": "command",
+-            "key": "│   uptime",
++            "key": "│ {$1}  uptime",
+             "text": "uptime -p | cut -d ' ' -f 2-",
+             "format": "{>22} │"
+         },
+@@ -36,7 +55,7 @@
+         },
+         {
+             "type": "packages",
+-            "key": "│   pkgs  ",
++            "key": "│ {$1}  pkgs  ",
+             "format": "{all>22} │"
+         },
+         {
+@@ -47,7 +66,7 @@
+         },
+         {
+             "type": "command",
+-            "key": "│   hname ",
++            "key": "│ {$1}  hname ",
+             "text": "hostnamectl hostname",
+             "format": "{>22} │"
+         },
+@@ -58,7 +77,7 @@
+         },
+         {
+             "type": "custom",
+-            "key": "╰───────────────────────────────────╯"
++            "key": "{$1}╰───────────────────────────────────╯"
+         },
+         "break"
+     ]
+diff --git a/fish/conf.d/fish_frozen_key_bindings.fish b/fish/conf.d/fish_frozen_key_bindings.fish
+new file mode 100644
+index 0000000..495aee9
+--- /dev/null
++++ b/fish/conf.d/fish_frozen_key_bindings.fish
+@@ -0,0 +1,14 @@
++# This file was created by fish when upgrading to version 4.3, to migrate
++# the 'fish_key_bindings' variable from its old default scope (universal)
++# to its new default scope (global).  We recommend you delete this file
++# and configure key bindings in ~/.config/fish/config.fish if needed.
++
++# set --global fish_key_bindings fish_default_key_bindings
++
++# Prior to version 4.3, fish shipped an event handler that runs
++# `set --universal fish_key_bindings fish_default_key_bindings`
++# whenever the fish_key_bindings variable is erased.
++# This means that as long as any fish < 4.3 is still running on this system,
++# we cannot complete the migration.
++# As a workaround, erase the universal variable at every shell startup.
++set --erase --universal fish_key_bindings
+diff --git a/fish/functions/fish_greeting.fish b/fish/functions/fish_greeting.fish
+index fcf3f6e..a10cb0d 100644
+--- a/fish/functions/fish_greeting.fish
++++ b/fish/functions/fish_greeting.fish
+@@ -1,10 +1,6 @@
+ function fish_greeting
+-    echo -ne '\x1b[38;5;16m'  # Set colour to primary
+-    echo '     ______           __          __  _       '
+-    echo '    / ____/___ ____  / /__  _____/ /_(_)___ _ '
+-    echo '   / /   / __ `/ _ \/ / _ \/ ___/ __/ / __ `/ '
+-    echo '  / /___/ /_/ /  __/ /  __(__  ) /_/ / /_/ /  '
+-    echo '  \____/\__,_/\___/_/\___/____/\__/_/\__,_/   '
++    echo -ne '\x1b[38;5;16m' # Set colour to primary
++
+     set_color normal
+-    fastfetch --key-padding-left 5
++    fastfetch --raw ~/Pictures/out.sixel --logo-width 20 --logo-height 20 --logo-padding-right 22 --logo-padding-top 2
+ end
+diff --git a/hypr/hyprland.conf b/hypr/hyprland.conf
+index 888c30e..f2ae672 100644
+--- a/hypr/hyprland.conf
++++ b/hypr/hyprland.conf
+@@ -12,6 +12,7 @@ exec = mkdir -p $cConf && touch -a $cConf/hypr-vars.conf
+ source = $cConf/hypr-vars.conf
+ 
+ # Default monitor conf
++#monitor = , 1024x768, auto, 1
+ monitor = , preferred, auto, 1
+ 
+ # Configs
+diff --git a/hypr/hyprland/execs.conf b/hypr/hyprland/execs.conf
+index ef63807..6254f61 100644
+--- a/hypr/hyprland/execs.conf
++++ b/hypr/hyprland/execs.conf
+@@ -14,6 +14,9 @@ exec-once = hyprctl setcursor $cursorTheme $cursorSize
+ exec-once = gsettings set org.gnome.desktop.interface cursor-theme '$cursorTheme'
+ exec-once = gsettings set org.gnome.desktop.interface cursor-size $cursorSize
+ 
++#Start overview utility
++exec-once = qs -c overview
++
+ # Location provider and night light
+ exec-once = /usr/lib/geoclue-2.0/demos/agent
+ exec-once = sleep 1 && gammastep
+diff --git a/hypr/hyprland/input.conf b/hypr/hyprland/input.conf
+index 2684511..d8c16a6 100644
+--- a/hypr/hyprland/input.conf
++++ b/hypr/hyprland/input.conf
+@@ -1,5 +1,5 @@
+ input {
+-    kb_layout = us
++    kb_layout = us,fr,ara
+     numlock_by_default = false
+     repeat_delay = 250
+     repeat_rate = 35
+diff --git a/hypr/hyprland/keybinds.conf b/hypr/hyprland/keybinds.conf
+index fef68a8..a7ec051 100644
+--- a/hypr/hyprland/keybinds.conf
++++ b/hypr/hyprland/keybinds.conf
+@@ -14,6 +14,9 @@ bindin = Super, mouse:277, global, caelestia:launcherInterrupt
+ bindin = Super, mouse_up, global, caelestia:launcherInterrupt
+ bindin = Super, mouse_down, global, caelestia:launcherInterrupt
+ 
++#overview widget
++bind = Super, TAB, exec, qs ipc -c overview call overview toggle
++
+ # Misc
+ bind = $kbSession, global, caelestia:session
+ bindl = $kbClearNotifs, global, caelestia:clearNotifs
+@@ -158,7 +161,7 @@ bind = $kbBrowser, exec, app2unit -- $browser
+ bind = $kbEditor, exec, app2unit -- $editor
+ bind = Super, G, exec, app2unit -- github-desktop
+ bind = $kbFileExplorer, exec, app2unit -- $fileExplorer
+-bind = Super+Alt, E, exec, app2unit -- nemo
++bind = Super+Alt, E, exec, app2unit -- thunar
+ bind = Ctrl+Alt, Escape, exec, app2unit -- qps
+ bind = Ctrl+Alt, V, exec, app2unit -- pavucontrol
+ 
+diff --git a/hypr/hyprland/misc.conf b/hypr/hyprland/misc.conf
+index 7ce5200..eee2e4f 100644
+--- a/hypr/hyprland/misc.conf
++++ b/hypr/hyprland/misc.conf
+@@ -8,7 +8,7 @@ misc {
+     disable_hyprland_logo = true
+     force_default_wallpaper = 0
+ 
+-    new_window_takes_over_fullscreen = 2
++    on_focus_under_fullscreen = 2
+     allow_session_lock_restore = true
+     middle_click_paste = false
+     focus_on_activate = true
+diff --git a/hypr/hyprland/rules.conf b/hypr/hyprland/rules.conf
+index 8646a8f..dc7ec5c 100644
+--- a/hypr/hyprland/rules.conf
++++ b/hypr/hyprland/rules.conf
+@@ -1,93 +1,93 @@
+ # ######## Window rules ########
+-windowrule = opacity $windowOpacity override, fullscreen:0
++windowrule = opacity $windowOpacity override, match:fullscreen false
+ 
+-windowrule = opaque, class:foot|equibop|org\.quickshell|imv|swappy  # They use native transparency or we want them opaque
+-windowrule = center 1, floating:1, xwayland:0  # Center all floating windows (not xwayland cause popups)
++windowrule = opaque true, match:class foot|equibop|org\.quickshell|imv|swappy  # They use native transparency or we want them opaque
++windowrule = center true, match:float true, match:xwayland false  # Center all floating windows (not xwayland cause popups)
+ 
+ # Float
+-windowrule = float, class:guifetch  # FlafyDev/guifetch
+-windowrule = float, class:yad
+-windowrule = float, class:zenity
+-windowrule = float, class:wev
+-windowrule = float, class:org\.gnome\.FileRoller
+-windowrule = float, class:file-roller  # WHY IS THERE TWOOOOOOOOOOOOOOOO
+-windowrule = float, class:blueman-manager
+-windowrule = float, class:com\.github\.GradienceTeam\.Gradience
+-windowrule = float, class:feh
+-windowrule = float, class:imv
+-windowrule = float, class:system-config-printer
+-windowrule = float, class:org\.quickshell
++windowrule = float true, match:class guifetch  # FlafyDev/guifetch
++windowrule = float true, match:class yad
++windowrule = float true, match:class zenity
++windowrule = float true, match:class wev
++windowrule = float true, match:class org\.gnome\.FileRoller
++windowrule = float true, match:class file-roller  # WHY IS THERE TWOOOOOOOOOOOOOOOO
++windowrule = float true, match:class blueman-manager
++windowrule = float true, match:class com\.github\.GradienceTeam\.Gradience
++windowrule = float true, match:class feh
++windowrule = float true, match:class imv
++windowrule = float true, match:class system-config-printer
++windowrule = float true, match:class org\.quickshell
+ 
+ # Float, resize and center
+-windowrule = float, class:foot, title:nmtui
+-windowrule = size 60% 70%, class:foot, title:nmtui
+-windowrule = center 1, class:foot, title:nmtui
+-windowrule = float, class:org\.gnome\.Settings
+-windowrule = size 70% 80%, class:org\.gnome\.Settings
+-windowrule = center 1, class:org\.gnome\.Settings
+-windowrule = float, class:org\.pulseaudio\.pavucontrol|yad-icon-browser
+-windowrule = size 60% 70%, class:org\.pulseaudio\.pavucontrol|yad-icon-browser
+-windowrule = center 1, class:org\.pulseaudio\.pavucontrol|yad-icon-browser
+-windowrule = float, class:nwg-look
+-windowrule = size 50% 60%, class:nwg-look
+-windowrule = center 1, class:nwg-look
++windowrule = float true, match:class foot, match:title nmtui
++windowrule = size 60% 70%, match:class foot, match:title nmtui
++windowrule = center 1, match:class foot, match:title nmtui
++windowrule = float true, match:class org\.gnome\.Settings
++windowrule = size 70% 80%, match:class org\.gnome\.Settings
++windowrule = center 1, match:class org\.gnome\.Settings
++windowrule = float true, match:class org\.pulseaudio\.pavucontrol|yad-icon-browser
++windowrule = size 60% 70%, match:class org\.pulseaudio\.pavucontrol|yad-icon-browser
++windowrule = center 1, match:class org\.pulseaudio\.pavucontrol|yad-icon-browser
++windowrule = float true, match:class nwg-look
++windowrule = size 50% 60%, match:class nwg-look
++windowrule = center 1, match:class nwg-look
+ 
+ # Special workspaces
+-windowrule = workspace special:sysmon, class:btop
+-windowrule = workspace special:music, class:feishin|Spotify|Supersonic|Cider
+-windowrule = workspace special:music, initialTitle:Spotify( Free)?  # Spotify wayland, it has no class for some reason
+-windowrule = workspace special:communication, class:discord|equibop|vesktop|whatsapp
+-windowrule = workspace special:todo, class:Todoist
++windowrule = workspace special:sysmon, match:class btop
++windowrule = workspace special:music, match:class feishin|Spotify|Supersonic|Cider
++windowrule = workspace special:music, match:initial_title Spotify( Free)?  # Spotify wayland, it has no class for some reason
++windowrule = workspace special:communication, match:class discord|equibop|vesktop|whatsapp
++windowrule = workspace special:todo, match:class obsidian
+ 
+ # Dialogs
+-windowrule = float, title:(Select|Open)( a)? (File|Folder)(s)?
+-windowrule = float, title:File (Operation|Upload)( Progress)?
+-windowrule = float, title:.* Properties
+-windowrule = float, title:Export Image as PNG
+-windowrule = float, title:GIMP Crash Debug
+-windowrule = float, title:Save As
+-windowrule = float, title:Library
++windowrule = float true, match:title (Select|Open)( a)? (File|Folder)(s)?
++windowrule = float true, match:title File (Operation|Upload)( Progress)?
++windowrule = float true, match:title .* Properties
++windowrule = float true, match:title Export Image as PNG
++windowrule = float true, match:title GIMP Crash Debug
++windowrule = float true, match:title Save As
++windowrule = float true, match:title Library
+ 
+ # Picture in picture (resize and move done via script)
+-windowrule = move 100%-w-2% 100%-w-3%, title:Picture(-| )in(-| )[Pp]icture  # Initial move so window doesn't shoot across the screen from the center
+-windowrule = keepaspectratio, title:Picture(-| )in(-| )[Pp]icture
+-windowrule = float, title:Picture(-| )in(-| )[Pp]icture
+-windowrule = pin, title:Picture(-| )in(-| )[Pp]icture
++windowrule = move 100%-w-2% 100%-w-3%, match:title Picture(-| )in(-| )[Pp]icture  # Initial move so window doesn't shoot across the screen from the center
++windowrule = keep_aspect_ratio true, match:title Picture(-| )in(-| )[Pp]icture
++windowrule = float true, match:title Picture(-| )in(-| )[Pp]icture
++windowrule = pin true, match:title Picture(-| )in(-| )[Pp]icture
+ 
+ # Steam
+-windowrule = rounding 10, title:, class:steam
+-windowrule = float, title:Friends List, class:steam
+-windowrule = immediate, class:steam_app_[0-9]+  # Allow tearing for steam games
+-windowrule = idleinhibit always, class:steam_app_[0-9]+  # Always idle inhibit when playing a steam game
++windowrule = rounding 10, match:class steam
++windowrule = float true, match:title Friends List, match:class steam
++windowrule = immediate true, match:class steam_app_[0-9]+  # Allow tearing for steam games
++windowrule = idle_inhibit always, match:class steam_app_[0-9]+  # Always idle inhibit when playing a steam game
+ 
+ # ATLauncher console
+-windowrule = float, class:com-atlauncher-App, title:ATLauncher Console
++windowrule = float true, match:class com-atlauncher-App, match:title ATLauncher Console
+ 
+ # Autodesk Fusion 360
+-windowrule = noblur, title:Fusion360|(Marking Menu), class:fusion360\.exe
++windowrule = no_blur true, match:title Fusion360|(Marking Menu), match:class fusion360\.exe
+ 
+ # Ugh xwayland popups
+-windowrule = nodim, xwayland:1, title:win[0-9]+
+-windowrule = noshadow, xwayland:1, title:win[0-9]+
+-windowrule = rounding 10, xwayland:1, title:win[0-9]+
++windowrule = no_dim true, match:xwayland 1, match:title win[0-9]+
++windowrule = no_shadow true, match:xwayland 1, match:title win[0-9]+
++windowrule = rounding 10, match:xwayland 1, match:title win[0-9]+
+ 
+ # ######## Workspace rules ########
+ workspace = w[tv1]s[false], gapsout:$singleWindowGapsOut
+ workspace = f[1]s[false], gapsout:$singleWindowGapsOut
+ 
+ # ######## Layer rules ########
+-layerrule = animation fade, hyprpicker  # Colour picker out animation
+-layerrule = animation fade, logout_dialog  # wlogout
+-layerrule = animation fade, selection  # slurp
+-layerrule = animation fade, wayfreeze
++layerrule = animation fade, match:namespace hyprpicker  # Colour picker out animation
++layerrule = animation fade, match:namespace logout_dialog  # wlogout
++layerrule = animation fade, match:namespace selection  # slurp
++layerrule = animation fade, match:namespace wayfreeze
+ 
+ # Fuzzel
+-layerrule = animation popin 80%, launcher
+-layerrule = blur, launcher
++layerrule = animation popin 80%, match:namespace launcher
++layerrule = blur true, match:namespace launcher
+ 
+ # Shell
+-layerrule = noanim, caelestia-(border-exclusion|area-picker)
+-layerrule = animation fade, caelestia-(drawers|background)
++layerrule = no_anim true, match:namespace caelestia-(border-exclusion|area-picker)
++layerrule = animation fade, match:namespace caelestia-(drawers|background)
+ 
+-layerrule = blur, caelestia-drawers
+-layerrule = ignorealpha 0.57, caelestia-drawers
++layerrule = blur true, match:namespace caelestia-drawers
++layerrule = ignore_alpha 0.57, match:namespace caelestia-drawers
+diff --git a/hypr/variables.conf b/hypr/variables.conf
+index eaea3e3..af3d0d0 100644
+--- a/hypr/variables.conf
++++ b/hypr/variables.conf
+@@ -1,13 +1,13 @@
+ # ### Hyprland ###
+ # Apps
+ $terminal = foot
+-$browser = zen-browser
+-$editor = codium
++$browser = librewolf
++$editor = foot -e nvim
+ $fileExplorer = thunar
+ 
+ # Touchpad
+ $touchpadDisableTyping = true
+-$touchpadScrollFactor = 0.3
++$touchpadScrollFactor = 0.8
+ $workspaceSwipeFingers = 4
+ $gestureFingers = 3
+ $gestureFingersMore = 4
+@@ -17,7 +17,7 @@ $blurEnabled = true
+ $blurSpecialWs = false
+ $blurPopups = true
+ $blurInputMethods = true
+-$blurSize = 8
++	$blurSize = 5
+ $blurPasses = 2
+ $blurXray = false
+ 
+@@ -34,7 +34,7 @@ $windowGapsOut = 40
+ $singleWindowGapsOut = 20
+ 
+ # Window styling
+-$windowOpacity = 0.95
++$windowOpacity = 0.85
+ $windowRounding = 10
+ 
+ $windowBorderSize = 3
