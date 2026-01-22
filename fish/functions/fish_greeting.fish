@@ -3,4 +3,5 @@ function fish_greeting
 
     set_color normal
     fastfetch --raw ~/Pictures/out.sixel --logo-width 20 --logo-height 20 --logo-padding-right 22 --logo-padding-top 2
+    #fastfetch --raw ~/Pictures/polytech.sixel --logo-width 1 --logo-height 1 --logo-padding-right 40 --logo-padding-top 2
 end
